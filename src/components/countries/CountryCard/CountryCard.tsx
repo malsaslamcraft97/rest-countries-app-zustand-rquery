@@ -8,7 +8,6 @@ type Props = {
 };
 
 export function CountryCard({ country }: Props) {
-  const { mutate } = useToggleFavorite();
   const toggleFavorite = useAppStore((s) => s.toggleFavorite);
   const isFav = useAppStore((s) => s.favorites[country.name.common]);
 
@@ -17,7 +16,11 @@ export function CountryCard({ country }: Props) {
       <div className={styles.flagWrapper}>
         <img src={country.flags.png} alt={country.name.common} />
 
-        <button data-active={isFav} className={styles.favorite}>
+        <button
+          data-active={isFav}
+          className={styles.favorite}
+          onClick={() => toggleFavorite(country.name.common)}
+        >
           ★
         </button>
       </div>
