@@ -10,6 +10,9 @@ type AppState = {
   toggleTheme: () => void;
   setSearch: (value: string) => void;
   setRegion: (value: string) => void;
+
+  favorites: Record<string, boolean>;
+  toggleFavorite: (name: string) => void;
 };
 
 let debounceTimer: ReturnType<typeof setTimeout>;
@@ -38,6 +41,16 @@ export const useAppStore = create<AppState>()(
           }, 400);
         },
         setRegion: (value) => set({ region: value }),
+
+        favorites: {},
+
+        toggleFavorite: (name) =>
+          set((state) => ({
+            favorites: {
+              ...state.favorites,
+              [name]: !state.favorites[name],
+            },
+          })),
       }),
       {
         name: "app-storage",
