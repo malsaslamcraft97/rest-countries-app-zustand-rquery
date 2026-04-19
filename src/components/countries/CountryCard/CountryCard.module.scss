@@ -1,0 +1,24 @@
+.card {
+  background: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.flag {
+  height: 160px;
+  background: #334155;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.title {
+  margin-bottom: 0.5rem;
+}
