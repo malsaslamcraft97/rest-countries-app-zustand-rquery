@@ -1,0 +1,41 @@
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card-bg);
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.flag {
+  height: 160px;
+  background: #2a3441;
+}
+
+.content {
+  padding: 16px;
+}
+
+.title {
+  height: 16px;
+  width: 60%;
+  background: #2a3441;
+  margin-bottom: 12px;
+}
+
+.line {
+  height: 12px;
+  width: 80%;
+  background: #2a3441;
+  margin-bottom: 8px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
