@@ -1,14 +1,22 @@
+import { useAppStore } from "../../../store/useAppStore";
 import styles from "./RegionFilter.module.scss";
 
 export function RegionFilter() {
+  const region = useAppStore((s) => s.region);
+  const setRegion = useAppStore((s) => s.setRegion);
+
   return (
-    <select className={styles.select}>
-      <option>Filter by Region</option>
-      <option>Africa</option>
-      <option>Americas</option>
-      <option>Asia</option>
-      <option>Europe</option>
-      <option>Oceania</option>
+    <select
+      value={region}
+      onChange={(e) => setRegion(e.target.value)}
+      className={styles.select}
+    >
+      <option value="">Filter by Region</option>
+      <option value="Africa">Africa</option>
+      <option value="Americas">Americas</option>
+      <option value="Asia">Asia</option>
+      <option value="Europe">Europe</option>
+      <option value="Oceania">Oceania</option>
     </select>
   );
 }
