@@ -1,8 +1,10 @@
 .select {
-  padding: 0.9rem 1rem;
+  padding: 0.9rem 1.2rem;
   border-radius: 8px;
   border: none;
   background: #1e293b;
   color: white;
   cursor: pointer;
+  min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }

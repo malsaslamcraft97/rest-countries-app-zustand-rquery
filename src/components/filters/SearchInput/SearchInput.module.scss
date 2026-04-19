@@ -1,14 +1,22 @@
 .wrapper {
-  flex: 1;
+  position: relative;
+  max-width: 420px;
+}
+
+.icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
 }
 
 .input {
   width: 100%;
-  max-width: 400px;
-  padding: 0.9rem 1rem;
+  padding: 0.9rem 1rem 0.9rem 2.5rem;
   border-radius: 8px;
   border: none;
   background: #1e293b;
   color: white;
-  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
