@@ -3,7 +3,7 @@ import { fetchCountries } from "../api/countriesApi";
 import { useAppStore } from "../store/useAppStore";
 
 export function useCountries() {
-  const search = useAppStore((s) => s.search);
+  const search = useAppStore((s) => s.debouncedSearch);
   const region = useAppStore((s) => s.region);
 
   return useQuery({
