@@ -14,22 +14,15 @@ export function CountryCard({ country }: Props) {
 
   return (
     <div className={styles.card}>
-      <img
-        className={styles.flag}
-        src={country.flags.png}
-        alt={country.name.common}
-      />
+      <div className={styles.flagWrapper}>
+        <img src={country.flags.png} alt={country.name.common} />
+
+        <button data-active={isFav} className={styles.favorite}>
+          ★
+        </button>
+      </div>
 
       <div className={styles.content}>
-        <button
-          onClick={() => {
-            toggleFavorite(country.name.common); // optimistic UI
-            mutate(country.name.common); // async sync
-          }}
-        >
-          {isFav ? "★" : "☆"}
-        </button>
-
         <h3 className={styles.title}>{country.name.common}</h3>
 
         <p>
