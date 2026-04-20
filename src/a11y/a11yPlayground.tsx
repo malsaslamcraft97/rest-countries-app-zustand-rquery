@@ -1,4 +1,5 @@
 import { AccessibleButtonDemo } from "./AccessibleButton/AccessibleButton.demo";
+import { AccordionDemo } from "./Accordion/Accordion.demo";
 import { ModalDemo } from "./Modal/Modal.demo";
 import { TabsDemo } from "./Tabs/Tabs.demo";
 
@@ -20,6 +21,11 @@ export function A11yPlayground() {
       <section>
         <h2>Accessible Tabs</h2>
         <TabsDemo />
+      </section>
+
+      <section>
+        <h2>Accessible Accordion (Disclosure)</h2>
+        <AccordionDemo />
       </section>
     </main>
   );
