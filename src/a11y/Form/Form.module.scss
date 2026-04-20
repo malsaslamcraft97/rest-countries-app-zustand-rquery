@@ -1,0 +1,50 @@
+.form {
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.input[aria-invalid="true"] {
+  border-color: #dc2626;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.button {
+  padding: 10px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.success {
+  color: green;
+  font-size: 14px;
+}

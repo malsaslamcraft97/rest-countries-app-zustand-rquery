@@ -1,5 +1,6 @@
 import { AccessibleButtonDemo } from "./AccessibleButton/AccessibleButton.demo";
 import { AccordionDemo } from "./Accordion/Accordion.demo";
+import { FormDemo } from "./Form/Form.demo";
 import { ModalDemo } from "./Modal/Modal.demo";
 import { TabsDemo } from "./Tabs/Tabs.demo";
 
@@ -26,6 +27,11 @@ export function A11yPlayground() {
       <section>
         <h2>Accessible Accordion (Disclosure)</h2>
         <AccordionDemo />
+      </section>
+
+      <section>
+        <h2>Accessible Form with validation and error announcements</h2>
+        <FormDemo />
       </section>
     </main>
   );
