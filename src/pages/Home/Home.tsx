@@ -19,9 +19,13 @@ export function Home() {
 
   return (
     <div>
+      <a href="#main" className={styles.skipLink}>
+        Skip to main content
+      </a>
+
       <Header />
 
-      <main className={styles.container}>
+      <main className={styles.container} id="main">
         <div className={styles.filters}>
           <SearchInput />
           <RegionFilter />
