@@ -1,5 +1,6 @@
 import { AccessibleButtonDemo } from "./AccessibleButton/AccessibleButton.demo";
 import { ModalDemo } from "./Modal/Modal.demo";
+import { TabsDemo } from "./Tabs/Tabs.demo";
 
 export function A11yPlayground() {
   return (
@@ -14,6 +15,11 @@ export function A11yPlayground() {
       <section>
         <h2>Accessible Modal dialog with focus traps</h2>
         <ModalDemo />
+      </section>
+
+      <section>
+        <h2>Accessible Tabs</h2>
+        <TabsDemo />
       </section>
     </main>
   );

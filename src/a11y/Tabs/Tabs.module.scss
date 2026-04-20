@@ -1,0 +1,84 @@
+.wrapper {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 32px;
+}
+
+/* Tab list */
+.tabList {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 6px;
+}
+
+/* Individual tab */
+.tab {
+  position: relative;
+  background: none;
+  border: none;
+  padding: 8px 0;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280; /* muted */
+
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+/* Hover */
+.tab:hover {
+  color: #111827;
+}
+
+/* Active tab */
+.tab[aria-selected="true"] {
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Underline indicator */
+.tab[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+
+  width: 100%;
+  height: 2px;
+  background: #2563eb;
+  border-radius: 2px;
+}
+
+/* Focus ring */
+.tab:focus-visible {
+  outline: 2px solid #facc15;
+  outline-offset: 4px;
+}
+
+/* Panel */
+.panel {
+  margin-top: 20px;
+  padding: 16px;
+
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+
+  font-size: 14px;
+  color: #374151;
+
+  animation: fadeIn 0.18s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
