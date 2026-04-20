@@ -3,7 +3,7 @@ import styles from "./AccessibleButton.module.scss";
 
 type Props = {
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: any) => void;
   isLoading?: boolean;
   disabled?: boolean;
   ariaLabel?: string;

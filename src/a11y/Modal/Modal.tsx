@@ -6,12 +6,13 @@ type Props = {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  triggerRef: React.RefObject<HTMLElement | null>;
 };
 
-export function Modal({ isOpen, onClose, title, children }: Props) {
+export function Modal({ isOpen, onClose, title, children, triggerRef }: Props) {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Close on ESC key press
+  // 1. Close on ESC
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -28,11 +29,53 @@ export function Modal({ isOpen, onClose, title, children }: Props) {
     };
   }, [isOpen, onClose]);
 
+  // 2. Move focus INTO modal
   useEffect(() => {
     if (isOpen && modalRef.current) {
       modalRef.current.focus();
     }
   }, [isOpen]);
+
+  // 3. Focus trap
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const focusable = modalRef.current?.querySelectorAll(
+      'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])',
+    );
+
+    const first = focusable?.[0] as HTMLElement;
+    const last = focusable?.[focusable.length - 1] as HTMLElement;
+
+    function handleTab(e: KeyboardEvent) {
+      if (e.key !== "Tab") return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleTab);
+
+    return () => {
+      document.removeEventListener("keydown", handleTab);
+    };
+  }, [isOpen]);
+
+  // 4. Restore focus BACK to button
+  useEffect(() => {
+    if (!isOpen && triggerRef.current) {
+      triggerRef.current.focus();
+    }
+  }, [isOpen, triggerRef]);
 
   if (!isOpen) return null;
 
