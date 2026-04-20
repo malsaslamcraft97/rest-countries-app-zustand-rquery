@@ -17,6 +17,12 @@ export function CountryCard({ country }: Props) {
         <img src={country.flags.png} alt={country.name.common} />
 
         <button
+          aria-pressed={isFav}
+          aria-label={
+            isFav
+              ? `Remove ${country.name.common} from favorites`
+              : `Add ${country.name.common} to favorites`
+          }
           data-active={isFav}
           className={styles.favorite}
           onClick={() => toggleFavorite(country.name.common)}
