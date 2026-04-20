@@ -1,155 +1,147 @@
-# 🌍 REST Countries Explorer (Zustand + React Query)
+# 🌍 REST Countries Explorer — Accessibility Improvements
 
-A modern React application that explores countries data using the REST Countries API.  
-Built to demonstrate **clean state management**, **server-state handling**, and **production-level frontend patterns**.
+This project focuses on building a performant and accessible frontend application using React, Zustand, and TanStack Query.
 
----
-
-## 🚀 Tech Stack
-
-- React + TypeScript
-- Vite
-- Zustand (client state)
-- TanStack React Query (server state)
-- SCSS Modules
-- React Query DevTools
+A major part of this iteration was improving **accessibility (a11y)** from a Lighthouse score of **80 → 100**, while also addressing real-world usability concerns beyond automated checks.
 
 ---
 
-## 🎯 Key Concepts Covered
+## 🚀 Accessibility Score Improvement
 
-This project was built as a hands-on implementation of advanced frontend patterns.
+| Metric        | Before | After   |
+| ------------- | ------ | ------- |
+| Accessibility | 80     | **100** |
 
-### 🧠 State Management
-
-#### Zustand (Client State)
-
-- Global store using `create`
-- Clean separation of concerns
-- Debounced search implementation
-- Theme management (dark/light)
-- Favorites with persistence
-
-#### Patterns Used
-
-- Single store (scalable for small-medium apps)
-- Derived state (`debouncedSearch`)
-- Local-first UI state (favorites)
+This improvement was achieved through a combination of **semantic HTML**, **ARIA best practices**, and **manual accessibility validation**.
 
 ---
 
-### 🌐 Server State (React Query)
+## 🧠 What We Fixed (Lighthouse Issues)
 
-- `useQuery` → initial data fetching
-- `useInfiniteQuery` → pagination
-- `useMutation` → async flows
-- Query caching & invalidation
-- Background prefetching
-- DevTools for debugging
+### 1. Form Labels (WCAG: Understandable)
 
----
-
-## ⚡ Features
-
-- 🔍 Search countries (debounced)
-- 🌍 Filter by region
-- ⭐ Mark countries as favorites (persisted)
-- 🌗 Dark / Light theme toggle
-- ♾ Infinite scrolling (pagination)
-- ⚡ Prefetching for faster UX
-- 🧊 Skeleton loaders (loading states)
-- 🛠 DevTools for query inspection
+- Added proper `<label>` elements for:
+  - Search input
+  - Region filter (`<select>`)
+- Used visually hidden labels (`sr-only`) to maintain clean UI
 
 ---
 
-## 🏗 Architecture Overview
+### 2. Missing `<title>` (WCAG: Understandable)
 
-### Separation of Concerns
+- Added descriptive document title:
 
-| Type of State    | Managed By  |
-| ---------------- | ----------- |
-| Server data      | React Query |
-| UI / client data | Zustand     |
-
-This ensures:
-
-- No duplication of state
-- Better performance
-- Predictable data flow
-
----
-
-## 📂 Folder Structure
-
-src/
-api/ # API calls
-components/ # UI components
-hooks/ # React Query hooks
-store/ # Zustand store
-styles/ # Global styles
-
----
-
-## 🔥 Important Design Decisions
-
-### 1. Favorites handled via Zustand (not React Query)
-
-Favorites are:
-
-- Client-only
-- Persisted locally
-- Not part of API
-
-So they are stored in Zustand instead of mutating React Query cache.
-
----
-
-### 2. Prefetching Strategy
-
-Countries data is prefetched on load to:
-
-- Warm cache early
-- Avoid loading flashes
-- Improve perceived performance
-
-Verified via React Query DevTools (inactive query with cached data).
-
----
-
-### 3. Infinite Query over Pagination
-
-Used `useInfiniteQuery` to:
-
-- Simulate scalable API usage
-- Demonstrate real-world pagination handling
-
----
-
-### 4. Theme via CSS Variables
-
-- Global theme controlled via Zustand
-- Applied using `data-theme` on `<body>`
-- Enables clean dark/light switching
-
----
-
-## 🧪 DevTools Usage
-
-React Query DevTools is integrated to:
-
-- Inspect query cache
-- Debug fetching states
-- Verify prefetching
-- Track invalidations
-
----
-
-## 📦 Getting Started
-
-```bash
-# install dependencies
-yarn
-
-# run dev server
-yarn dev
+```html
+<title>REST Countries Explorer</title>
 ```
+
+### 3. Missing lang Attribute (WCAG: Robust)
+
+- Defined document language for screen readers:
+
+```html
+<html lang="en"></html>
+```
+
+### 4. Heading Hierarchy (WCAG: Operable + Understandable)
+
+- Implemented proper structure:
+  - h1 -> Page title
+  - h2 -> Sections
+  - h3 -> Country Cards
+- Ensured no heading levels were skipped
+
+## ♿ Accessibility Enhancements (Beyond Lighthouse)
+
+### 🔹 1. Keyboard Navigation
+
+- Full app operable using keyboard only
+- All interactive elements are focusable:
+  • Buttons
+  • Inputs
+  • Select dropdowns
+- Logical tab order maintained (DOM = visual order)
+
+### 🔹 2. Accessible Interactive Elements
+
+⭐ Favorite Button
+
+- Added:
+  • aria-label (purpose)
+  • aria-pressed (state)
+
+```html
+<button
+  aria-pressed="{isFav}"
+  aria-label="{"
+  isFav
+  ?
+  `Remove
+  ${country.name.common}
+  from
+  favorites`
+  :
+  `Add
+  ${country.name.common}
+  to
+  favorites`
+  }
+></button>
+```
+
+🌙 Theme Toggle
+
+- Clearly communicates state using ARIA:
+
+```html
+<button
+  aria-pressed={isDark}
+  aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+>
+```
+
+### 🔹 3. Search Input Accessibility
+
+- Replaced placeholder-only input with a proper `<label>`
+- Ensured the input retains meaning even after user starts typing
+- Improved screen reader announcement and usability
+
+---
+
+### 🔹 4. Skip Navigation (WCAG Level A)
+
+- Implemented "Skip to main content" link
+
+```tsx
+<a href="#main">Skip to main content</a>
+```
+
+- Hidden by default and visible only on keyboard focus
+- Allows users to bypass repetitive navigation (header, filters, etc.)
+
+### 🔹 5. Focus Management
+
+- Added visible focus indicators for all interactive elements
+- Ensured no focus traps exist
+- Verified smooth navigation using:
+  • Tab (forward)
+  • Shift + Tab (backward)
+
+### 🔹 6. Visual vs DOM Order Alignment
+
+- Ensured layout does not rely on:
+  • flex-order
+  • row-reverse
+- Maintained consistency between:
+  • Visual layout
+  • DOM structure
+  • Keyboard navigation order
+
+### 🔹 7. Screen Reader Validation (Manual Testing)
+
+- Tested using VoiceOver (macOS)
+  Validated:
+  • Proper heading hierarchy navigation
+  • Correct control announcements (inputs, buttons, selects)
+  • Meaningful labels and ARIA attributes
+  • Logical reading and navigation order
