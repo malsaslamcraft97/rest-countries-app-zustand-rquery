@@ -24,12 +24,12 @@ export function AccessibleButton({
     <button
       type={type}
       className={styles.button}
-      onClick={onClick}
+      onClick={isDisabled ? undefined : onClick}
       disabled={isDisabled}
-      aria-label={ariaLabel}
+      aria-label={ariaLabel || undefined}
       aria-busy={isLoading || undefined}
     >
-      {isLoading ? "Loading..." : children}
+      {isLoading ? <span aria-live="polite">Loading...</span> : children}
     </button>
   );
 }

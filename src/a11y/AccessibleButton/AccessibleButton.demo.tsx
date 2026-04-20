@@ -12,6 +12,16 @@ export function AccessibleButtonDemo() {
       <AccessibleButton disabled>Disabled Button</AccessibleButton>
 
       <AccessibleButton ariaLabel="Add to favorites">⭐</AccessibleButton>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          alert("Submitted!");
+        }}
+      >
+        <input type="text" />
+        <AccessibleButton type="submit">Submit</AccessibleButton>
+      </form>
     </div>
   );
 }
