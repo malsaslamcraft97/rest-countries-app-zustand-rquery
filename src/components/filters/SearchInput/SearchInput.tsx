@@ -7,9 +7,16 @@ export function SearchInput() {
 
   return (
     <div className={styles.wrapper}>
-      <span className={styles.icon}>🔍</span>
+      <label htmlFor="search" className={styles.srOnly}>
+        Search for a country
+      </label>
+
+      <span className={styles.icon} aria-hidden="true">
+        🔍
+      </span>
 
       <input
+        id="search"
         type="text"
         placeholder="Search for a country..."
         className={styles.input}
