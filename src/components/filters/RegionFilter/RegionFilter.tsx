@@ -6,17 +6,24 @@ export function RegionFilter() {
   const setRegion = useAppStore((s) => s.setRegion);
 
   return (
-    <select
-      value={region}
-      onChange={(e) => setRegion(e.target.value)}
-      className={styles.select}
-    >
-      <option value="">Filter by Region</option>
-      <option value="Africa">Africa</option>
-      <option value="Americas">Americas</option>
-      <option value="Asia">Asia</option>
-      <option value="Europe">Europe</option>
-      <option value="Oceania">Oceania</option>
-    </select>
+    <div className={styles.wrapper}>
+      <label htmlFor="region" className={styles.srOnly}>
+        Filter countries by region
+      </label>
+
+      <select
+        id="region"
+        value={region}
+        onChange={(e) => setRegion(e.target.value)}
+        className={styles.select}
+      >
+        <option value="">Filter by Region</option>
+        <option value="Africa">Africa</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+    </div>
   );
 }
