@@ -33,6 +33,12 @@ export function Modal({ isOpen, onClose, title, children, triggerRef }: Props) {
   useEffect(() => {
     if (isOpen && modalRef.current) {
       modalRef.current.focus();
+
+      const firstFocusable = modalRef.current.querySelector(
+        "input, button, textarea, select",
+      ) as HTMLElement;
+
+      firstFocusable?.focus();
     }
   }, [isOpen]);
 
@@ -80,7 +86,7 @@ export function Modal({ isOpen, onClose, title, children, triggerRef }: Props) {
   if (!isOpen) return null;
 
   return (
-    <div className={styles.overlay}>
+    <div className={styles.overlay} onClick={onClose}>
       <div
         className={styles.modal}
         role="dialog"
@@ -88,12 +94,13 @@ export function Modal({ isOpen, onClose, title, children, triggerRef }: Props) {
         aria-labelledby="modal-title"
         ref={modalRef}
         tabIndex={-1}
+        onClick={(e) => e.stopPropagation()}
       >
-        <h2 id="modal-title">{title}</h2>
+        <h2 id="modal-title" className={styles.title}>
+          {title}
+        </h2>
 
         <div className={styles.content}>{children}</div>
-
-        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );
