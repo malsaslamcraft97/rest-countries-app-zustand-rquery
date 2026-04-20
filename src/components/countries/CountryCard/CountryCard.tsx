@@ -26,7 +26,7 @@ export function CountryCard({ country }: Props) {
       </div>
 
       <div className={styles.content}>
-        <h3 className={styles.title}>{country.name.common}</h3>
+        <h2 className={styles.title}>{country.name.common}</h2>
 
         <p>
           <strong>Population:</strong> {country.population.toLocaleString()}
