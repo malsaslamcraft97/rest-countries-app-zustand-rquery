@@ -1,0 +1,26 @@
+.button {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Hover */
+.button:hover {
+  background: #1d4ed8;
+}
+
+/* Disabled */
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Focus visibility (CRITICAL for Accessibility) */
+.button:focus-visible {
+  outline: 3px solid #facc15;
+  outline-offset: 2px;
+}
