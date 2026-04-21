@@ -1,5 +1,6 @@
 import { AccessibleButtonDemo } from "./AccessibleButton/AccessibleButton.demo";
 import { AccordionDemo } from "./Accordion/Accordion.demo";
+import { ComboboxDemo } from "./Combobox/Combobox.demo";
 import { FormDemo } from "./Form/Form.demo";
 import { LiveRegionDemo } from "./LiveRegion/LiveRegion.demo";
 import { ModalDemo } from "./Modal/Modal.demo";
@@ -39,6 +40,11 @@ export function A11yPlayground() {
       <section>
         <h2>ARIA Live regions for announcements</h2>
         <LiveRegionDemo />
+      </section>
+
+      <section>
+        <h2>Accessible select/combobox</h2>
+        <ComboboxDemo />
       </section>
     </main>
   );
