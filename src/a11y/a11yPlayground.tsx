@@ -1,6 +1,7 @@
 import { AccessibleButtonDemo } from "./AccessibleButton/AccessibleButton.demo";
 import { AccordionDemo } from "./Accordion/Accordion.demo";
 import { FormDemo } from "./Form/Form.demo";
+import { LiveRegionDemo } from "./LiveRegion/LiveRegion.demo";
 import { ModalDemo } from "./Modal/Modal.demo";
 import { TabsDemo } from "./Tabs/Tabs.demo";
 
@@ -32,6 +33,11 @@ export function A11yPlayground() {
       <section>
         <h2>Accessible Form with validation and error announcements</h2>
         <FormDemo />
+      </section>
+
+      <section>
+        <h2>ARIA Live regions for announcements</h2>
+        <LiveRegionDemo />
       </section>
     </main>
   );
