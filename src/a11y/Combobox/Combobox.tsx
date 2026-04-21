@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import styles from "./Combobox.module.scss";
+import { useDebounce } from "../../hooks/useDebounce";
+import { highlightMatch } from "../../utils/highlightMatch";
 
 type Props = {
   options: string[];
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: string; // input value
+  onInputChange?: (value: string) => void;
+  onSelect?: (value: string) => void;
   placeholder?: string;
   loading?: boolean;
 };
@@ -12,7 +15,8 @@ type Props = {
 export function Combobox({
   options,
   value,
-  onChange,
+  onInputChange,
+  onSelect,
   placeholder = "Select...",
   loading = false,
 }: Props) {
@@ -21,8 +25,10 @@ export function Combobox({
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const listRef = useRef<HTMLUListElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const listId = useId(); // avoids duplicate IDs
+  const debouncedQuery = useDebounce(query, 300);
 
   // Sync controlled value
   useEffect(() => {
@@ -33,17 +39,18 @@ export function Combobox({
 
   // Filter options
   const filtered = options.filter((opt) =>
-    opt.toLowerCase().includes(query.toLowerCase()),
+    opt.toLowerCase().includes(debouncedQuery.toLowerCase()),
   );
 
   const activeId =
-    highlightedIndex >= 0 ? `option-${highlightedIndex}` : undefined;
+    highlightedIndex >= 0 ? `${listId}-option-${highlightedIndex}` : undefined;
 
   // Close on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
       if (!wrapperRef.current?.contains(e.target as Node)) {
         setIsOpen(false);
+        setHighlightedIndex(-1);
       }
     }
 
@@ -54,12 +61,16 @@ export function Combobox({
   // Scroll active item into view
   useEffect(() => {
     if (highlightedIndex >= 0) {
-      const el = document.getElementById(`option-${highlightedIndex}`);
+      const el = document.getElementById(
+        `${listId}-option-${highlightedIndex}`,
+      );
       el?.scrollIntoView({ block: "nearest" });
     }
-  }, [highlightedIndex]);
+  }, [highlightedIndex, listId]);
 
   function handleKeyDown(e: React.KeyboardEvent) {
+    if (filtered.length === 0) return;
+
     switch (e.key) {
       case "ArrowDown":
         e.preventDefault();
@@ -96,7 +107,7 @@ export function Combobox({
     setQuery(option);
     setIsOpen(false);
     setHighlightedIndex(-1);
-    onChange?.(option);
+    onSelect?.(option);
   }
 
   return (
@@ -106,26 +117,31 @@ export function Combobox({
         value={query}
         placeholder={placeholder}
         onChange={(e) => {
-          setQuery(e.target.value);
+          const val = e.target.value;
+
+          setQuery(val);
           setIsOpen(true);
           setHighlightedIndex(-1);
+
+          onInputChange?.(val);
+
+          // Optional UX: clear selection when user edits
+          if (!val) {
+            onSelect?.("");
+          }
         }}
         onFocus={() => setIsOpen(true)}
         onKeyDown={handleKeyDown}
         role="combobox"
         aria-expanded={isOpen}
-        aria-controls="combobox-list"
+        aria-controls={listId}
         aria-activedescendant={activeId}
+        aria-autocomplete="list"
         className={styles.input}
       />
 
       {isOpen && (
-        <ul
-          ref={listRef}
-          id="combobox-list"
-          role="listbox"
-          className={styles.list}
-        >
+        <ul id={listId} role="listbox" className={styles.list}>
           {loading && <li className={styles.status}>Loading...</li>}
 
           {!loading && filtered.length === 0 && (
@@ -136,7 +152,7 @@ export function Combobox({
             filtered.map((option, index) => (
               <li
                 key={option}
-                id={`option-${index}`}
+                id={`${listId}-option-${index}`}
                 role="option"
                 aria-selected={highlightedIndex === index}
                 className={`${styles.option} ${
@@ -144,11 +160,11 @@ export function Combobox({
                 }`}
                 onMouseEnter={() => setHighlightedIndex(index)}
                 onMouseDown={(e) => {
-                  e.preventDefault(); // prevent blur
+                  e.preventDefault(); // prevent input blur
                   selectOption(option);
                 }}
               >
-                {option}
+                {highlightMatch(option, debouncedQuery)}
               </li>
             ))}
         </ul>

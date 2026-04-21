@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Combobox } from "./Combobox";
 
 export function ComboboxDemo() {
-  const [value, setValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
 
   const countries = [
     "India",
@@ -23,13 +24,17 @@ export function ComboboxDemo() {
 
       <Combobox
         options={countries}
-        value={value}
-        onChange={setValue}
+        value={inputValue}
+        onInputChange={setInputValue}
+        onSelect={(val) => {
+          setSelectedValue(val);
+          setInputValue(val); // sync on selection
+        }}
         placeholder="Search for a country..."
       />
 
       <p style={{ marginTop: "20px", fontSize: "14px" }}>
-        <strong>Selected:</strong> {value || "None"}
+        <strong>Selected:</strong> {selectedValue || "None"}
       </p>
     </div>
   );
