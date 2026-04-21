@@ -11,6 +11,10 @@
 
 ---
 
+# Axe Audit - Manual Testing using Axe DevTools
+
+## Accessibility Page Audit (feat/aria-patterns)
+
 ### ❗ Issue 1: Insufficient Color Contrast (Tabs - Active State)
 
 **Type:** Violation  
@@ -114,19 +118,105 @@ Opacity reduces contrast unpredictably and can make content difficult to read, e
 
 ---
 
-## ✅ Key Learnings
+## 🔍 Home Page Audit (Countries App)
 
-- Avoid using **color alone** to indicate UI state
-- Prefer **structure-based indicators** (underline, border, font-weight)
-- Avoid using **opacity for text contrast**
-- Always validate contrast against actual background colors
-- Accessibility requires both **design decisions and technical implementation**
+### Summary
+
+- **Tool Used:** axe DevTools
+- **Issues Found:** 0
+- **Scope:** Search, Region Filter, Country Grid, Country Cards, Favorite Button, Theme Toggle
+
+---
+
+## ✅ Validation Performed
+
+The Home page was audited using axe DevTools and manually verified for accessibility best practices.
+
+### ✔ Semantic Structure
+
+- Proper use of:
+  - `<header>`, `<main>`
+  - Logical content grouping
+- No misuse of ARIA roles
+
+---
+
+### ✔ Form Accessibility
+
+- Search input has associated `<label>`
+- Region filter (`<select>`) properly labeled
+- No placeholder-only inputs
+
+---
+
+### ✔ Interactive Elements
+
+- Buttons (favorite, theme toggle) include:
+  - `aria-label`
+  - `aria-pressed` (for toggle states)
+- All controls are keyboard accessible
+
+---
+
+### ✔ Keyboard Navigation
+
+- Full navigation possible using:
+  - `Tab` / `Shift + Tab`
+- Logical tab order maintained
+- No keyboard traps detected
+
+---
+
+### ✔ Focus Management
+
+- Visible focus indicators present
+- Focus moves predictably across UI
+- No hidden or unreachable interactive elements
+
+---
+
+### ✔ Screen Reader Support
+
+- Verified using VoiceOver (macOS)
+- Confirmed:
+  - Correct announcements for buttons and inputs
+  - Meaningful labels for controls
+  - Proper reading order
+
+---
+
+### ✔ Color Contrast
+
+- All text meets WCAG 2.1 AA contrast requirements
+- Previously identified contrast issues were resolved
+
+---
+
+### ✔ Visual vs DOM Order
+
+- Layout matches DOM structure
+- No use of:
+  - `flex-order`
+  - `row-reverse`
 
 ---
 
 ## 🚀 Outcome
 
-- All accessibility violations resolved
-- ARIA components validated for real-world usage
-- Improved accessibility beyond automated tooling
-- Achieved **0 issues in axe DevTools audit**
+- No accessibility violations detected via automated tools
+- All critical user flows validated manually
+- Application meets **WCAG 2.1 AA standards**
+
+---
+
+## 🧠 Key Insight
+
+Automated tools reported zero issues, but manual validation was still performed to ensure:
+
+- Real usability for keyboard users
+- Proper screen reader experience
+- Logical interaction patterns
+
+This reinforces that:
+
+> Accessibility is not just about passing tools, but ensuring real-world usability
