@@ -35,6 +35,7 @@ export function A11yPlayground() {
         <FormDemo />
       </section>
 
+      {/* ARIA Live Region = A DOM area that announces dynamic changes to screen readers */}
       <section>
         <h2>ARIA Live regions for announcements</h2>
         <LiveRegionDemo />
