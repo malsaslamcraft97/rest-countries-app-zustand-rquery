@@ -3,7 +3,7 @@ import styles from "./AccessibleButton.module.scss";
 
 type Props = {
   children: React.ReactNode;
-  onClick?: (e: any) => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   isLoading?: boolean;
   disabled?: boolean;
   ariaLabel?: string;

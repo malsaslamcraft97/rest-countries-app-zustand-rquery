@@ -19,7 +19,8 @@ export function AccessibleButtonDemo() {
           alert("Submitted!");
         }}
       >
-        <input type="text" />
+        <label htmlFor="test">Test Input</label>
+        <input type="text" id="test" />
         <AccessibleButton type="submit">Submit</AccessibleButton>
       </form>
     </div>
