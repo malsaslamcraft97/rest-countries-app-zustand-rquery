@@ -21,24 +21,24 @@
 
   font-size: 14px;
   font-weight: 500;
-  color: #6b7280; /* muted */
 
+  color: #9ca3af; /* muted but readable on dark */
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 /* Hover */
 .tab:hover {
-  color: #111827;
+  color: #e5e7eb;
 }
 
 /* Active tab */
 .tab[aria-selected="true"] {
-  color: #2563eb;
+  color: #e5e7eb; /* FIX: readable instead of blue */
   font-weight: 600;
 }
 
-/* Underline indicator */
+/* Underline indicator (visual accent instead of text color) */
 .tab[aria-selected="true"]::after {
   content: "";
   position: absolute;
@@ -47,7 +47,7 @@
 
   width: 100%;
   height: 2px;
-  background: #2563eb;
+  background: #60a5fa; /* blue used safely here */
   border-radius: 2px;
 }
 
