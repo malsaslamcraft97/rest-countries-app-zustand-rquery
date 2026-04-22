@@ -24,6 +24,7 @@ export function ComboboxDemo() {
 
       <Combobox
         options={countries}
+        label="Search for countries"
         value={inputValue}
         onInputChange={setInputValue}
         onSelect={(val) => {
