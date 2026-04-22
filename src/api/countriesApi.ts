@@ -10,14 +10,41 @@ export type Country = {
   };
 };
 
+const PRIMARY =
+  "https://restcountries.com/v3.1/all?fields=name,population,region,capital,flags";
+
+const FALLBACK =
+  "https://raw.githubusercontent.com/mledoze/countries/master/countries.json";
+
+function mapFallbackCountry(c: any): Country {
+  return {
+    name: {
+      common: c.name?.common || "Unknown",
+    },
+    population: c.population ?? 0,
+    region: c.region || "Unknown",
+    capital: c.capital ? [c.capital].flat() : [],
+    flags: {
+      png: c.flags?.png || c.flags?.svg || "",
+    },
+  };
+}
+
 export async function fetchCountries(): Promise<Country[]> {
-  const res = await fetch(
-    "https://restcountries.com/v3.1/all?fields=name,population,region,capital,flags",
-  );
+  try {
+    const res = await fetch(PRIMARY);
+    if (!res.ok) throw new Error("Primary failed");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch countries");
+    return await res.json();
+  } catch (err) {
+    console.warn("Primary API failed, using fallback");
+
+    const res = await fetch(FALLBACK);
+    if (!res.ok) {
+      throw new Error("Both APIs failed");
+    }
+
+    const data = await res.json();
+    return data.map(mapFallbackCountry);
   }
-
-  return res.json();
 }
