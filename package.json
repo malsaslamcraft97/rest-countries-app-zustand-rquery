@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "a11y:ci": "kill-port 5173 && start-server-and-test dev http://localhost:5173 \"yarn pa11y-ci --config pa11yci.cjs\""
+    "a11y:ci": "kill-port 5173 && start-server-and-test dev http://localhost:5173 \"yarn pa11y-ci --config pa11yci.cjs\"",
+    "lighthouse:ci": "lhci autorun"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.0.0",
@@ -21,6 +22,7 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
     "@testing-library/dom": "^10.4.1",
     "@types/jest-axe": "^3.5.9",
     "@types/react": "^19.2.14",
