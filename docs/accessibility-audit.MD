@@ -201,6 +201,31 @@ The Home page was audited using axe DevTools and manually verified for accessibi
 
 ---
 
+## Pa11y Audit
+
+Initial Issues: 2  
+Final Issues: 0
+
+### Issue: Input Missing Accessible Name
+
+Fix:
+
+- Added label
+- Added aria-label fallback
+
+---
+
+## Final Result
+
+✔ 1/1 URLs passed  
+✔ 0 accessibility violations
+
+---
+
+## Takeaway
+
+Accessibility is about real usability, not just passing tools.
+
 ## 🚀 Outcome
 
 - No accessibility violations detected via automated tools
