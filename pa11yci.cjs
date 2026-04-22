@@ -1,5 +1,3 @@
-console.log("PA11Y CONFIG LOADED");
-
 module.exports = {
   urls: ["http://localhost:5173"],
 

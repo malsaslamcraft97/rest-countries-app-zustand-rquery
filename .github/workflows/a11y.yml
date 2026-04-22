@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      # MAIN FIX FOR INITIAL GITHUB CI WORKFLOWS FAILURE
+      # 0. Install required system libs (updated for Ubuntu)
       - name: Install Chrome dependencies
         run: |
           sudo apt-get update
@@ -34,8 +34,17 @@ jobs:
             libnss3 \
             libatk-bridge2.0-0 \
             libxss1 \
-            libasound2 \
+            libasound2t64 \
             libgbm-dev
 
+      # 1. Install real Chrome (NOT puppeteer chromium)
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      # 2. Tell Puppeteer/Pa11y to use system Chrome
+      - name: Set Chrome path
+        run: echo "PUPPETEER_EXECUTABLE_PATH=$(which google-chrome)" >> $GITHUB_ENV
+
+      # 3. Run tests
       - name: Run Pa11y
         run: yarn a11y:ci
