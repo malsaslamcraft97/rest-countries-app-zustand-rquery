@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
     "a11y:ci": "kill-port 5173 && start-server-and-test dev http://localhost:5173 \"yarn pa11y-ci --config pa11yci.cjs\"",
     "lighthouse:ci": "lhci autorun"
   },
