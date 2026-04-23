@@ -15,7 +15,7 @@ export function useCountries() {
       return fetchCountries();
     },
 
-    retry: false,
+    retry: import.meta.env.MODE === "test" ? false : 2,
 
     initialPageParam: 0, // required in v5
 
