@@ -19,3 +19,11 @@ export function renderWithProviders(ui: ReactElement) {
     <QueryClientProvider client={queryClient}>{ui}</QueryClientProvider>,
   );
 }
+
+export function createWrapper() {
+  const queryClient = createTestQueryClient();
+
+  return ({ children }: { children: React.ReactNode }) => (
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  );
+}
