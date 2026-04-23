@@ -2,7 +2,7 @@ name: Accessibility CI
 
 on:
   push:
-    branches: [main, feat/a11y-testing]
+    branches: [main, feat/a11y-testing, feat/unit-integration-e2e-tests]
   pull_request:
   workflow_dispatch:
 
