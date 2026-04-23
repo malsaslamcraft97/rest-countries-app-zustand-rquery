@@ -15,6 +15,8 @@ export function useCountries() {
       return fetchCountries();
     },
 
+    retry: false,
+
     initialPageParam: 0, // required in v5
 
     getNextPageParam: (_lastPage, pages) => {

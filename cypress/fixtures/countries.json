@@ -1,0 +1,51 @@
+[
+  {
+    "name": { "common": "Country 0" },
+    "population": 1000,
+    "region": "Asia",
+    "capital": ["A"],
+    "flags": { "png": "" }
+  },
+  {
+    "name": { "common": "Country 1" },
+    "population": 2000,
+    "region": "Europe",
+    "capital": ["B"],
+    "flags": { "png": "" }
+  },
+  {
+    "name": { "common": "Country 2" },
+    "population": 3000,
+    "region": "Asia",
+    "capital": ["C"],
+    "flags": { "png": "" }
+  },
+  {
+    "name": { "common": "Country 3" },
+    "population": 4000,
+    "region": "Europe",
+    "capital": ["D"],
+    "flags": { "png": "" }
+  },
+  {
+    "name": { "common": "Country 4" },
+    "population": 5000,
+    "region": "Asia",
+    "capital": ["E"],
+    "flags": { "png": "" }
+  },
+  {
+    "name": { "common": "Country 5" },
+    "population": 6000,
+    "region": "Europe",
+    "capital": ["F"],
+    "flags": { "png": "" }
+  },
+  {
+    "name": { "common": "Country 6" },
+    "population": 7000,
+    "region": "Asia",
+    "capital": ["G"],
+    "flags": { "png": "" }
+  }
+]
