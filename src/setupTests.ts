@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { expect } from "vitest";
+import { expect, vi } from "vitest";
 import { toHaveNoViolations } from "jest-axe";
 import { server } from "./mocks/server";
 
@@ -12,3 +12,13 @@ afterEach(() => {
 });
 
 afterAll(() => server.close());
+
+Object.defineProperty(window, "localStorage", {
+  value: {
+    getItem: vi.fn(),
+    setItem: vi.fn(),
+    removeItem: vi.fn(),
+    clear: vi.fn(),
+  },
+  writable: true,
+});
