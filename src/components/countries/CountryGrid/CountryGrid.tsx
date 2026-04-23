@@ -21,6 +21,10 @@ export function CountryGrid() {
 
   const countries = data?.pages.flat() ?? [];
 
+  if (!countries.length) {
+    return <p>No countries found</p>;
+  }
+
   return (
     <>
       <div className={styles.grid}>

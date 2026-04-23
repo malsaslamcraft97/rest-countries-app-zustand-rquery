@@ -5,8 +5,13 @@ export default defineConfig({
 
   e2e: {
     baseUrl: "http://localhost:5173", // your Vite dev server
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
+    setupNodeEvents(on) {
+      on("task", {
+        logA11y(violations) {
+          console.log("A11Y Violations:", violations);
+          return null;
+        },
+      });
     },
   },
 });

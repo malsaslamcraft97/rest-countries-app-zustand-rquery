@@ -11,7 +11,6 @@ declare global {
 }
 
 Cypress.Commands.add("checkA11yPage", () => {
-  cy.injectAxe();
   cy.checkA11y();
 });
 
