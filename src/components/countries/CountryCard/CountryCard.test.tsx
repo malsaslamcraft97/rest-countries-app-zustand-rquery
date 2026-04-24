@@ -2,20 +2,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CountryCard } from "./CountryCard";
-import { vi } from "vitest";
-
-// create mock outside
-const toggleFavorite = vi.fn();
-let favorites: Record<string, boolean> = {};
-
-// proper ESM mock
-vi.mock("../../../store/useAppStore", () => ({
-  useAppStore: (selector: any) =>
-    selector({
-      favorites,
-      toggleFavorite,
-    }),
-}));
+import { useAppStore } from "../../../store/useAppStore";
 
 const mockCountry = {
   name: { common: "India" },
@@ -26,6 +13,10 @@ const mockCountry = {
 };
 
 describe("CountryCard", () => {
+  beforeEach(() => {
+    useAppStore.setState({ favorites: {} });
+  });
+
   it("renders country details correctly", () => {
     render(<CountryCard country={mockCountry} />);
 
@@ -54,8 +45,6 @@ describe("CountryCard", () => {
   });
 
   it("calls toggleFavorite when button is clicked", async () => {
-    favorites = {}; // reset state
-
     render(<CountryCard country={mockCountry} />);
 
     const button = screen.getByRole("button", {
@@ -63,12 +52,11 @@ describe("CountryCard", () => {
     });
 
     await userEvent.click(button);
-
-    expect(toggleFavorite).toHaveBeenCalledWith("India");
+    expect(useAppStore.getState().favorites["India"]).toBe(true);
   });
 
   it("reflects favorite state via aria-pressed", () => {
-    favorites = { India: true };
+    useAppStore.setState({ favorites: { India: true } });
 
     render(<CountryCard country={mockCountry} />);
 
