@@ -143,4 +143,20 @@ describe("Countries App", () => {
 
     logA11y();
   });
+
+  it("filters to show only favorite countries", () => {
+    // initial state
+    cy.contains("Country 0").should("be.visible");
+    cy.contains("Country 1").should("be.visible");
+
+    // mark Country 0 as favorite
+    cy.get("button[aria-label*='Country 0']").click();
+
+    // toggle filter
+    cy.contains("button", "Show Favorites Only").click();
+
+    // verify filtering
+    cy.contains("Country 0").should("be.visible");
+    cy.contains("Country 1").should("not.exist");
+  });
 });
