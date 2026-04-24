@@ -17,16 +17,16 @@ describe("Favorites Filter (integration)", () => {
   it("filters to only favorite countries", async () => {
     renderWithProviders(<Home />);
 
-    // wait for data
-    const india = await screen.findByText("India");
-    const germany = await screen.findByText("Germany");
+    // ✅ match fixture data
+    const country0 = await screen.findByText("Country 0");
+    const country1 = await screen.findByText("Country 1");
 
-    expect(india).toBeInTheDocument();
-    expect(germany).toBeInTheDocument();
+    expect(country0).toBeInTheDocument();
+    expect(country1).toBeInTheDocument();
 
-    // favorite India
+    // favorite Country 0
     const favBtn = screen.getByRole("button", {
-      name: /add india to favorites/i,
+      name: /add country 0 to favorites/i,
     });
 
     await userEvent.click(favBtn);
@@ -38,8 +38,8 @@ describe("Favorites Filter (integration)", () => {
       }),
     );
 
-    // only India should remain
-    expect(screen.getByText("India")).toBeInTheDocument();
-    expect(screen.queryByText("Germany")).not.toBeInTheDocument();
+    // ✅ only favorite remains
+    expect(screen.getByText("Country 0")).toBeInTheDocument();
+    expect(screen.queryByText("Country 1")).not.toBeInTheDocument();
   });
 });
