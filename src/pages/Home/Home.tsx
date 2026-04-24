@@ -6,6 +6,7 @@ import styles from "./Home.module.scss";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { fetchCountries } from "../../api/countriesApi";
+import { FavoritesToggle } from "../../components/filters/RegionFilter/FavoritesToggle";
 
 export function Home() {
   const queryClient = useQueryClient();
@@ -29,6 +30,7 @@ export function Home() {
         <div className={styles.filters}>
           <SearchInput />
           <RegionFilter />
+          <FavoritesToggle />
         </div>
 
         <CountryGrid />
