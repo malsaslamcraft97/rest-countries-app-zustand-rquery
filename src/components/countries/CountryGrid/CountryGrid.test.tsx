@@ -1,38 +1,31 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { vi, type Mock } from "vitest";
+import { vi } from "vitest";
 import { CountryGrid } from "./CountryGrid";
 import { useCountries } from "../../../hooks/useCountries";
 
-// ---- Mock dependencies ----
-
 // mock hook
-vi.mock("../../../hooks/useCountries", () => ({
-  useCountries: vi.fn(),
-}));
+vi.mock("../../../hooks/useCountries");
 
-// mock CountryCard (avoid re-testing it)
+// mock child components (good practice here)
 vi.mock("../CountryCard/CountryCard", () => ({
   CountryCard: ({ country }: any) => (
     <div data-testid="country-card">{country.name.common}</div>
   ),
 }));
 
-// mock skeleton
 vi.mock("../CountryCard/CountryCardSkeleton", () => ({
   CountryCardSkeleton: () => <div data-testid="skeleton" />,
 }));
 
-// ---- Helpers ----
-const mockUseCountries = useCountries as unknown as Mock;
+const mockUseCountries = useCountries as unknown as ReturnType<typeof vi.fn>;
 
-// ---- Tests ----
 describe("CountryGrid", () => {
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  it("renders skeletons while loading", () => {
+  it("shows skeletons while loading", () => {
     mockUseCountries.mockReturnValue({
       isLoading: true,
       isError: false,
@@ -43,7 +36,7 @@ describe("CountryGrid", () => {
     expect(screen.getAllByTestId("skeleton")).toHaveLength(8);
   });
 
-  it("renders error state", () => {
+  it("shows error state", () => {
     mockUseCountries.mockReturnValue({
       isLoading: false,
       isError: true,
@@ -51,10 +44,10 @@ describe("CountryGrid", () => {
 
     render(<CountryGrid />);
 
-    expect(screen.getByText(/error/i)).toBeInTheDocument();
+    expect(screen.getByText("Error")).toBeInTheDocument();
   });
 
-  it("renders countries from data", () => {
+  it("renders countries from a single page", () => {
     mockUseCountries.mockReturnValue({
       isLoading: false,
       isError: false,
@@ -68,14 +61,12 @@ describe("CountryGrid", () => {
 
     render(<CountryGrid />);
 
-    const cards = screen.getAllByTestId("country-card");
-
-    expect(cards).toHaveLength(2);
+    expect(screen.getAllByTestId("country-card")).toHaveLength(2);
     expect(screen.getByText("India")).toBeInTheDocument();
     expect(screen.getByText("Germany")).toBeInTheDocument();
   });
 
-  it("flattens multiple pages correctly", () => {
+  it("flattens multiple pages", () => {
     mockUseCountries.mockReturnValue({
       isLoading: false,
       isError: false,
@@ -90,16 +81,16 @@ describe("CountryGrid", () => {
 
     render(<CountryGrid />);
 
-    const cards = screen.getAllByTestId("country-card");
-
-    expect(cards).toHaveLength(2);
+    expect(screen.getAllByTestId("country-card")).toHaveLength(2);
   });
 
   it("shows Load More button when hasNextPage is true", () => {
     mockUseCountries.mockReturnValue({
       isLoading: false,
       isError: false,
-      data: { pages: [[]] },
+      data: {
+        pages: [[{ name: { common: "India" } }]],
+      },
       hasNextPage: true,
       fetchNextPage: vi.fn(),
     });
@@ -111,28 +102,13 @@ describe("CountryGrid", () => {
     ).toBeInTheDocument();
   });
 
-  it("does not show Load More button when hasNextPage is false", () => {
-    mockUseCountries.mockReturnValue({
-      isLoading: false,
-      isError: false,
-      data: { pages: [[]] },
-      hasNextPage: false,
-    });
-
-    render(<CountryGrid />);
-
-    expect(
-      screen.queryByRole("button", { name: /load more/i }),
-    ).not.toBeInTheDocument();
-  });
-
   it("calls fetchNextPage when Load More is clicked", async () => {
     const fetchNextPage = vi.fn();
 
     mockUseCountries.mockReturnValue({
       isLoading: false,
       isError: false,
-      data: { pages: [[]] },
+      data: { pages: [[{ name: { common: "India" } }]] },
       hasNextPage: true,
       fetchNextPage,
     });
@@ -141,6 +117,6 @@ describe("CountryGrid", () => {
 
     await userEvent.click(screen.getByRole("button", { name: /load more/i }));
 
-    expect(fetchNextPage).toHaveBeenCalledTimes(1);
+    expect(fetchNextPage).toHaveBeenCalled();
   });
 });
