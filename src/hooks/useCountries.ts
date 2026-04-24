@@ -8,6 +8,9 @@ export function useCountries() {
   const search = useAppStore((s) => s.debouncedSearch);
   const region = useAppStore((s) => s.region);
 
+  const showFavoritesOnly = useAppStore((s) => s.showFavoritesOnly);
+  const favorites = useAppStore((s) => s.favorites);
+
   return useInfiniteQuery({
     queryKey: ["countries"],
 
@@ -36,7 +39,11 @@ export function useCountries() {
 
         const matchesRegion = region ? country.region === region : true;
 
-        return matchesSearch && matchesRegion;
+        const matchesFavs = showFavoritesOnly
+          ? favorites[country.name.common]
+          : true;
+
+        return matchesSearch && matchesRegion && matchesFavs;
       });
 
       // re-chunk into pages

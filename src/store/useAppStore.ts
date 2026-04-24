@@ -13,6 +13,9 @@ type AppState = {
 
   favorites: Record<string, boolean>;
   toggleFavorite: (name: string) => void;
+
+  showFavoritesOnly: boolean;
+  toggleShowFavorites: () => void;
 };
 
 let debounceTimer: ReturnType<typeof setTimeout>;
@@ -50,6 +53,12 @@ export const useAppStore = create<AppState>()(
               ...state.favorites,
               [name]: !state.favorites[name],
             },
+          })),
+
+        showFavoritesOnly: false,
+        toggleShowFavorites: () =>
+          set((state) => ({
+            showFavoritesOnly: !state.showFavoritesOnly,
           })),
       }),
       {
