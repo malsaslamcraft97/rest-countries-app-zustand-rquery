@@ -1,52 +1,39 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { RegionFilter } from "./RegionFilter";
-import { vi } from "vitest";
-
-let setRegion = vi.fn();
-let storeState: any;
-
-vi.mock("../../../store/useAppStore", () => ({
-  useAppStore: (selector: any) => selector(storeState),
-}));
+import { useAppStore } from "../../../store/useAppStore";
+import { renderWithProviders } from "../../../test-utils";
 
 describe("RegionFilter", () => {
   beforeEach(() => {
-    setRegion = vi.fn();
-    storeState = {
-      region: "",
-      setRegion,
-    };
+    useAppStore.setState({ region: "", search: "" });
   });
 
   it("renders all region options", () => {
-    render(<RegionFilter />);
+    renderWithProviders(<RegionFilter />);
 
     expect(screen.getByRole("option", { name: "Africa" })).toBeInTheDocument();
     expect(screen.getByRole("option", { name: "Asia" })).toBeInTheDocument();
   });
 
   it("reflects selected region", () => {
-    storeState.region = "Asia";
+    useAppStore.setState({ region: "Asia" });
 
-    render(<RegionFilter />);
+    renderWithProviders(<RegionFilter />);
 
-    const select = screen.getByRole("combobox");
-    expect(select).toHaveValue("Asia");
+    expect(screen.getByRole("combobox")).toHaveValue("Asia");
   });
 
-  it("calls setRegion on change", async () => {
-    render(<RegionFilter />);
+  it("updates region in store on change", async () => {
+    renderWithProviders(<RegionFilter />);
 
-    const select = screen.getByRole("combobox");
+    await userEvent.selectOptions(screen.getByRole("combobox"), "Europe");
 
-    await userEvent.selectOptions(select, "Europe");
-
-    expect(setRegion).toHaveBeenCalledWith("Europe");
+    expect(useAppStore.getState().region).toBe("Europe");
   });
 
   it("has accessible label", () => {
-    render(<RegionFilter />);
+    renderWithProviders(<RegionFilter />);
 
     expect(
       screen.getByLabelText(/filter countries by region/i),
