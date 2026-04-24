@@ -17,7 +17,7 @@ describe("Favorites Filter (integration)", () => {
   it("filters to only favorite countries", async () => {
     renderWithProviders(<Home />);
 
-    // ✅ match fixture data
+    // match fixture data
     const country0 = await screen.findByText("Country 0");
     const country1 = await screen.findByText("Country 1");
 
@@ -38,7 +38,7 @@ describe("Favorites Filter (integration)", () => {
       }),
     );
 
-    // ✅ only favorite remains
+    // only favorite remains
     expect(screen.getByText("Country 0")).toBeInTheDocument();
     expect(screen.queryByText("Country 1")).not.toBeInTheDocument();
   });
